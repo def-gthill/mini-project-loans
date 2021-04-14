@@ -1,0 +1,15 @@
+name: loans
+channels:
+  - conda-forge
+dependencies:
+  - python=3.8
+  - pip=20.2.*
+  - numpy=1.19.*
+  - pandas=1.0.*
+  - scikit-learn=0.23.*
+  - matplotlib=3.3.*
+  - seaborn=0.11.*
+  - flask=1.1.*
+  - pip:
+    - flask-restful==0.3.*
+  
