@@ -22,7 +22,7 @@ class LoanApplication(fr.Resource):
         df = pd.DataFrame(
             json_data.values(), index=json_data.keys()
         ).transpose()
-        probability = model.predict_proba(df)[0, model.classes_.index('Y')]
+        probability = model.predict_proba(df)[0, list(model.classes_).index('Y')]
         prediction = model.predict(df)[0]
         result = 'approved' if prediction == 'Y' else 'denied'
         return {'approval_probability': probability, 'prediction': result}
