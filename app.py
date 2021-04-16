@@ -23,7 +23,7 @@ class LoanApplication(fr.Resource):
     def post(self):
         json_data = request.get_json()
         for field in must_have_fields:
-            if field not in json_data:
+            if json_data[field] is None:
                 return {'status': 'incomplete'}
         df = pd.DataFrame(
             json_data.values(), index=json_data.keys()
