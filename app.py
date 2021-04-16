@@ -14,23 +14,18 @@ api = fr.Api(app)
 
 
 model = learn.load('everything_logistic.pkl')
-must_have_fields = [
-    'ApplicantIncome', 'LoanAmount', 'Credit_History',
-]
 
 
 class LoanApplication(fr.Resource):
     def post(self):
         json_data = request.get_json()
-        for field in must_have_fields:
-            if json_data[field] is None:
-                return {'status': 'incomplete'}
         df = pd.DataFrame(
             json_data.values(), index=json_data.keys()
         ).transpose()
+        probability = model.predict_proba(df)[0, model.classes_.index('Y')]
         prediction = model.predict(df)[0]
         result = 'approved' if prediction == 'Y' else 'denied'
-        return {'status': result}
+        return {'approval_probability': probability, 'prediction': result}
 
 
 api.add_resource(LoanApplication, '/loan')
