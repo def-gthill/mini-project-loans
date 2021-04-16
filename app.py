@@ -13,7 +13,7 @@ app = flask.Flask(__name__)
 api = fr.Api(app)
 
 
-model = learn.load('baseline.pkl')
+model = learn.load('everything_logistic.pkl')
 
 
 class LoanApplication(fr.Resource):
