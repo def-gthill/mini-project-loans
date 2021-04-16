@@ -14,11 +14,17 @@ api = fr.Api(app)
 
 
 model = learn.load('everything_logistic.pkl')
+must_have_fields = [
+    'ApplicantIncome', 'LoanAmount', 'Credit_History',
+]
 
 
 class LoanApplication(fr.Resource):
     def post(self):
         json_data = request.get_json()
+        for field in must_have_fields:
+            if field not in json_data:
+                return {'status': 'incomplete'}
         df = pd.DataFrame(
             json_data.values(), index=json_data.keys()
         ).transpose()
